@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import Profile from './components/Profile';
-import Post from './components/Post';
+import Posts from './components/Posts';
 
 const App = () => {
   return (
@@ -9,7 +9,8 @@ const App = () => {
       <Header />
       <main>
         <div className='container'>
-          <Post />
+          <Posts />
+
           <Profile />
         </div>
       </main>
