@@ -19,7 +19,7 @@ const Header = () => {
           <div>
             <ul className='nav'>
               <li>
-                <a href='#' className='nav-link'>
+                <a href='/' className='nav-link'>
                   <svg
                     aria-label='Home'
                     fill='#262626'
@@ -32,7 +32,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href='#' className='nav-link'>
+                <a href='/' className='nav-link'>
                   <svg
                     aria-label='Home'
                     fill='#262626'
@@ -45,7 +45,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href='#' className='nav-link'>
+                <a href='/' className='nav-link'>
                   <svg
                     aria-label='Home'
                     fill='#262626'
@@ -62,7 +62,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href='#' className='nav-link'>
+                <a href='/' className='nav-link'>
                   <svg
                     aria-label='Home'
                     fill='#262626'
@@ -75,7 +75,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href='#' className='nav-link'>
+                <a href='/' className='nav-link'>
                   <img src={avatar} alt='avatar' width='22' height='22' />
                 </a>
               </li>
