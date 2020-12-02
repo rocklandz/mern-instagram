@@ -37,7 +37,7 @@ main {
   padding: 90px 0 50px 0;
   max-width: 1000px;
 }
-.container {
+.home-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-gap: 2rem;
@@ -150,12 +150,16 @@ input.search::placeholder {
 }
 .likes {
   padding: 0 1rem;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 .comments {
   padding: 0 1rem;
 }
+p.comment {
+  margin-bottom: 4px;
+}
 .moment {
+  margin-top: 5px;
   text-transform: uppercase;
   font-size: 10px;
   padding: 0 1rem;
@@ -171,7 +175,7 @@ input.search::placeholder {
   padding: 0 1rem;
   min-height: 56px;
 }
-.comment-form textarea {
+.comment-form input {
   border: none;
   outline: none;
   resize: none;
@@ -186,8 +190,11 @@ input.search::placeholder {
 .comment-form button {
   border: none;
   background-color: transparent;
-  color: rgba(var(--d69, 0, 149, 246), 1);
+  color: rgba(var(--d69, 0, 149, 246), 0.4);
   font-weight: bolder;
+}
+.comment-form button.focusing {
+  color: rgba(var(--d69, 0, 149, 246), 1);
 }
 
 /* Profile css */
@@ -233,4 +240,47 @@ input.search::placeholder {
   margin-top: 1.5rem;
   color: #c7c7c7;
   font-size: 11px;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 1x;
+  max-width: 350px;
+  padding: 2rem 3rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  border: 1px solid #dbdbdb;
+  text-align: center;
+}
+.form-header {
+  margin-bottom: 1rem;
+}
+.label {
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+.form-container input {
+  outline: none;
+  border: 1px solid #dbdbdb;
+  padding: 3px 10px;
+  border-radius: 3px;
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+  background-color: rgba(var(--b3f, 250, 250, 250), 1);
+}
+.form-container input::placeholder {
+  font-size: 12px;
+}
+.form-container button {
+  outline: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  background-color: #0095f6;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  height: 2rem;
+  color: #fff;
+  font-weight: bold;
 }

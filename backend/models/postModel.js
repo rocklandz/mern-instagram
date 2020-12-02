@@ -6,7 +6,7 @@ const postSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
-    name: { type: String, required: true },
+    username: { type: String, required: true },
     avatar: {
       type: String,
     },
@@ -21,6 +21,7 @@ const postSchema = mongoose.Schema(
     comments: [
       {
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        name: { type: String },
         comment: { type: String, required: true },
       },
     ],

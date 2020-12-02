@@ -33,13 +33,14 @@ const getPost = asyncHandler(async (req, res) => {
 // @route  POST /api/posts/
 // @access Private
 const createPost = asyncHandler(async (req, res) => {
-  const { id, name, avatar } = req.user;
+  const { id, username, avatar } = req.user;
 
   const post = await Post.create({
     user: id,
-    name: name,
+    username: username,
     avatar: avatar,
     image: req.body.image,
+    caption: req.body.caption,
   });
 
   if (post) {
@@ -75,4 +76,27 @@ const likePost = asyncHandler(async (req, res) => {
   }
 });
 
-export { getPost, getPosts, likePost, createPost };
+// @desc   Create a comment
+// @route  PUT /api/posts/:id/comment
+// @access Private
+const createComment = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  console.log(req.url);
+  if (post) {
+    post.comments.unshift({
+      user: req.user._id,
+      name: req.user.username,
+      comment: req.body.comment,
+    });
+
+    await post.save();
+
+    const posts = await Post.find({});
+    res.json(posts);
+  } else {
+    res.status(404);
+    throw new Error('No post found');
+  }
+});
+
+export { getPost, getPosts, likePost, createPost, createComment };

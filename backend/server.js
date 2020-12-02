@@ -2,6 +2,7 @@ import express from 'express';
 import connectDb from './config/db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import { notFound, errorHandler } from './middlewares/error.js';
 
 import userRoutes from './routes/userRoutes.js';
 import postRoutes from './routes/postRoutes.js';
@@ -17,6 +18,10 @@ app.use(cors());
 //  Routes
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+
+//  Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`Server is running on port ${PORT}`));

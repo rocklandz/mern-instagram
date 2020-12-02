@@ -1,42 +1,65 @@
-import React from 'react';
-import avatar from '../images/avatar.jpg';
+import React, { useState } from 'react';
+import Moment from 'react-moment';
+import { useDispatch } from 'react-redux';
+import { createComment } from '../actions/postActions';
 
-const Post = () => {
+const Post = ({ post }) => {
+  const dispatch = useDispatch();
+  const {
+    _id,
+    username,
+    avatar,
+    image,
+    likes,
+    comments,
+    createdAt,
+    caption,
+  } = post;
+
+  const [cmtText, setCmtText] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createComment(_id, cmtText));
+
+    setCmtText('');
+  };
+
   return (
     <section id='post'>
       <div className='post-header'>
         <img src={avatar} alt='' className='avatar' width='32' height='32' />
         <a href='/' className='post-user'>
-          tomojustfunky
+          {username}
         </a>
         <div className='post-options'>
           <svg
             aria-label='Tùy chọn khác'
-            class='_8-yf5 '
+            className='_8-yf5 '
             fill='#262626'
             height='16'
             viewBox='0 0 48 48'
             width='16'
           >
             <circle
-              clip-rule='evenodd'
+              clipRule='evenodd'
               cx='8'
               cy='24'
-              fill-rule='evenodd'
+              fillRule='evenodd'
               r='4.5'
             ></circle>
             <circle
-              clip-rule='evenodd'
+              clipRule='evenodd'
               cx='24'
               cy='24'
-              fill-rule='evenodd'
+              fillRule='evenodd'
               r='4.5'
             ></circle>
             <circle
-              clip-rule='evenodd'
+              clipRule='evenodd'
               cx='40'
               cy='24'
-              fill-rule='evenodd'
+              fillRule='evenodd'
               r='4.5'
             ></circle>
           </svg>
@@ -44,10 +67,7 @@ const Post = () => {
       </div>
 
       <div className='post-image'>
-        <img
-          src='https://camo.voz.tech/03dbd86977ace061715eace2de6816141d033fcf/68747470733a2f2f69312d6b696e68646f616e682e766e6563646e2e6e65742f323032302f31322f30312f64736330363735342d6a70672d313630363831343231352d363330302d313630363831343532342e6a70673f773d36383026683d3026713d313030266470723d31266669743d63726f7026733d74354d6232524c74755254683834786a694c76475951/'
-          alt=''
-        />
+        <img src={image} alt='' />
       </div>
 
       <div className='post-comments'>
@@ -57,7 +77,7 @@ const Post = () => {
               <a href='/' className='react'>
                 <svg
                   aria-label='Thích'
-                  class='_8-yf5 '
+                  className='_8-yf5 '
                   fill='#262626'
                   height='24'
                   viewBox='0 0 48 48'
@@ -71,16 +91,16 @@ const Post = () => {
               <a href='/' className='react'>
                 <svg
                   aria-label='Bình luận'
-                  class='_8-yf5 '
+                  className='_8-yf5 '
                   fill='#262626'
                   height='24'
                   viewBox='0 0 48 48'
                   width='24'
                 >
                   <path
-                    clip-rule='evenodd'
+                    clipRule='evenodd'
                     d='M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z'
-                    fill-rule='evenodd'
+                    fillRule='evenodd'
                   ></path>
                 </svg>
               </a>
@@ -89,7 +109,7 @@ const Post = () => {
               <a href='/' className='react'>
                 <svg
                   aria-label='Chia sẻ bài viết'
-                  class='_8-yf5 '
+                  className='_8-yf5 '
                   fill='#262626'
                   height='24'
                   viewBox='0 0 48 48'
@@ -104,7 +124,7 @@ const Post = () => {
             <a href='/' className='react bookmark'>
               <svg
                 aria-label='Lưu'
-                class='_8-yf5 '
+                className='_8-yf5 '
                 fill='#262626'
                 height='24'
                 viewBox='0 0 48 48'
@@ -116,31 +136,58 @@ const Post = () => {
           </span>
         </div>
 
-        <div className='likes'>
-          <span className='bold-text'>john doe</span> and xxx liked
-        </div>
+        {likes.length > 0 ? (
+          <div className='likes'>
+            <span className='bold-text'>{likes[0].name}</span>
+            {likes.length > 1 && (
+              <>
+                and <span className='bold-text'>{likes.length - 1}others</span>
+              </>
+            )}{' '}
+            liked this
+          </div>
+        ) : null}
 
         <div className='comments'>
           <p className='comment'>
-            <span className='user bold-text'>tomojustfunky </span>I lorem ipsum
-            abv
+            {caption ? (
+              <>
+                <span className='user bold-text'>{username} </span>
+                {caption}{' '}
+              </>
+            ) : null}
           </p>
+
+          {comments.length > 0 ? (
+            <>
+              {comments.map((cmt) => (
+                <p className='comment'>
+                  <span className='user bold-text'>{cmt.name} </span>{' '}
+                  {cmt.comment}
+                </p>
+              ))}
+            </>
+          ) : null}
         </div>
 
-        <div className='moment grey-text'>30 mins ago</div>
+        <div className='moment grey-text'>
+          <Moment fromNow>{createdAt}</Moment>
+        </div>
 
         <div className='comment-form'>
-          <form action=''>
-            <textarea
+          <form onSubmit={handleSubmit}>
+            <input
               placeholder='Add a comment...'
               height='18'
               wrap='off'
               autoComplete='off'
               autoCorrect='off'
-              cols='1'
-              rows='1'
-            ></textarea>
-            <button type='submit'>Post</button>
+              value={cmtText}
+              onChange={(e) => setCmtText(e.target.value)}
+            ></input>
+            <button type='submit' class={cmtText !== '' ? 'focusing' : ''}>
+              Post
+            </button>
           </form>
         </div>
       </div>
