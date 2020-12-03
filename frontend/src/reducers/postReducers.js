@@ -39,6 +39,7 @@ export const postsReducer = (state = { posts: [] }, action) => {
       return { loading: true };
     case POSTS_FETCH_SUCCESS:
     case POST_COMMENT_SUCCESS:
+    case POST_LIKE_SUCCESS:
       return { loading: false, posts: payload };
     case POSTS_FETCH_FAIL:
       return { loading: false, error: payload };

@@ -79,6 +79,20 @@ export const createPost = (post) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_CREATE_REQUEST });
 
+    const imgData = new FormData();
+    imgData.append('file', post.image);
+    imgData.append('upload_preset', 'rocklandz');
+    const res = await axios.post(
+      'https://api.cloudinary.com/v1_1/duczq6lyl/image/upload',
+      imgData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    post = { ...post, image: res.data.secure_url };
+
     const {
       userLogin: { userInfo },
     } = getState();
@@ -90,7 +104,7 @@ export const createPost = (post) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/posts`, post, config);
+    const { data } = await axios.post(`/api/posts`, post, config);
 
     dispatch({ type: POST_CREATE_SUCCESS, payload: data });
   } catch (error) {
@@ -145,14 +159,14 @@ export const likePost = (id) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
-    const config = {
+    const { data } = await axios({
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
-    };
-
-    const { data } = await axios.put(`/api/posts/${id}`, config);
+      url: `/api/posts/${id}/like`,
+    });
 
     dispatch({ type: POST_LIKE_SUCCESS, payload: data });
   } catch (error) {

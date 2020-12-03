@@ -12,6 +12,7 @@ const Register = ({ history }) => {
 
   const { loading, error } = useSelector((state) => state.userRegister);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { success } = useSelector((state) => state.userRegister);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +23,15 @@ const Register = ({ history }) => {
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo.id) {
       history.push('/');
     }
-  }, [history, userInfo]);
+    if (success) {
+      setTimeout(() => {
+        history.push('/');
+      }, 1000);
+    }
+  }, [history, userInfo, success]);
 
   return (
     <>

@@ -111,7 +111,20 @@ export const getUserProfile = () => async (dispatch, getState) => {
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
-    dispatch({ type: USER_PROFILE_REQUEST });
+    dispatch({ type: USER_PROFILE_UPDATE_REQUEST });
+    const imgData = new FormData();
+    imgData.append('file', user.avatar);
+    imgData.append('upload_preset', 'rocklandz');
+    const res = await axios.post(
+      'https://api.cloudinary.com/v1_1/duczq6lyl/image/upload',
+      imgData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    user = { ...user, avatar: res.data.secure_url };
 
     const {
       userLogin: { userInfo },
@@ -126,10 +139,10 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 
     const { data } = await axios.put(`/api/users/profile`, user, config);
 
-    dispatch({ type: USER_PROFILE_SUCCESS, payload: data });
+    dispatch({ type: USER_PROFILE_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: USER_PROFILE_FAIL,
+      type: USER_PROFILE_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -19,11 +19,11 @@ const Login = ({ history }) => {
     setPassword('');
   };
 
-    useEffect(() => {
-      if (userInfo) {
-        history.push('/');
-      }
-    }, [history, userInfo]);
+  useEffect(() => {
+    if (userInfo && userInfo.id) {
+      history.push('/');
+    }
+  }, [history, userInfo]);
 
   return (
     <>
@@ -43,6 +43,7 @@ const Login = ({ history }) => {
             type='password'
           />
           <div>
+            {error ? <p>{error}</p> : null}
             <button type='submit' className='form-button'>
               {loading ? 'Loading...' : 'Login'}
             </button>

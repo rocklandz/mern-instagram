@@ -5,7 +5,7 @@ import Post from '../models/postModel.js';
 // @route  GET /api/posts
 // @access Private
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({});
+  const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
 
   if (posts) {
     res.json(posts);
@@ -34,6 +34,7 @@ const getPost = asyncHandler(async (req, res) => {
 // @access Private
 const createPost = asyncHandler(async (req, res) => {
   const { id, username, avatar } = req.user;
+  console.log(req.headers);
 
   const post = await Post.create({
     user: id,
@@ -59,17 +60,20 @@ const likePost = asyncHandler(async (req, res) => {
 
   if (post) {
     if (post.likes.map((like) => like.user).includes(req.user.id)) {
-      res.status(400);
-      throw new Error('Post already liked');
+      post.likes = post.likes.filter(
+        ({ user }) => user.toString() !== req.user.id
+      );
+      await post.save();
+    } else {
+      post.likes.unshift({
+        user: req.user._id,
+        name: req.user.username,
+      });
+      await post.save();
     }
 
-    post.likes.unshift({
-      user: req.user._id,
-      name: req.user.username,
-    });
-
-    await post.save();
-    res.json(post.likes);
+    const posts = await Post.find({});
+    res.json(posts);
   } else {
     res.status(404);
     throw new Error('No post found');

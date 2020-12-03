@@ -87,17 +87,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
-  const { name, email, username, avatar, password } = req.body;
+  const { name, email, username, avatar } = req.body;
 
   if (user) {
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.avatar = avatar || user.avatar;
-
-    if (password) {
-      user.password = await bcrypt.hash(password, salt);
-    }
 
     const updatedUser = await user.save();
 
