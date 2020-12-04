@@ -7,7 +7,6 @@ const Header = () => {
 
   return (
     <>
-      {' '}
       {user ? (
         <div id='header'>
           <div className='header-container'>
@@ -38,7 +37,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href='/' className='nav-link'>
+                  <a href='/new-post' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'
@@ -51,7 +50,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href='/' className='nav-link'>
+                  <a href='/new-post' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'
@@ -68,7 +67,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href='/' className='nav-link'>
+                  <a href='/new-post' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'
@@ -86,6 +85,7 @@ const Header = () => {
                       style={{
                         borderRadius: '50%',
                         border: '1px solid #dbdbdb',
+                        backgroundColor: '#dbdbdb',
                       }}
                       src={user.avatar}
                       width='24'

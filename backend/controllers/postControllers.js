@@ -72,7 +72,7 @@ const likePost = asyncHandler(async (req, res) => {
       await post.save();
     }
 
-    const posts = await Post.find({});
+    const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
     res.json(posts);
   } else {
     res.status(404);
@@ -95,7 +95,7 @@ const createComment = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    const posts = await Post.find({});
+    const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
     res.json(posts);
   } else {
     res.status(404);

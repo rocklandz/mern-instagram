@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPost } from '../actions/postActions';
+import { getUserProfile } from '../actions/userActions';
+import Loader from '../components/Loader';
 import logo from '../images/ig-logo.png';
 import imageHolder from '../images/post-holder.png';
 
-const PostForm = () => {
+const PostForm = ({ history }) => {
   const dispatch = useDispatch();
 
   const [caption, setCaption] = useState('');
@@ -15,7 +17,11 @@ const PostForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createPost({ image, caption }));
+    if (image === imageHolder) {
+      alert('Choose a picture from your computer');
+    } else {
+      dispatch(createPost({ image, caption }));
+    }
   };
 
   const handleInput = (e) => {
@@ -31,6 +37,13 @@ const PostForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (post) {
+      history.push('/');
+    }
+    dispatch(getUserProfile());
+  }, [dispatch]);
+
   return (
     <>
       <div className='form-container'>
@@ -44,7 +57,7 @@ const PostForm = () => {
           </div>
           <textarea
             onChange={(e) => setCaption(e.target.value)}
-            placeholder='Enter caption'
+            placeholder='Post caption...'
             rows='3'
             maxLength='300'
             type='text'
@@ -62,7 +75,7 @@ const PostForm = () => {
           <div>
             {error ? <p>{error}</p> : null}
             <button type='submit' className='form-button'>
-              {loading ? 'Submitting...' : 'Submit'}
+              {loading ? <Loader /> : 'Submit'}
             </button>
           </div>
         </form>

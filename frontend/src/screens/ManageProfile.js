@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, updateUserProfile } from '../actions/userActions';
+import Loader from '../components/Loader';
 import avatarHolder from '../images/avatar.jpg';
 
 const ManageProfile = () => {
@@ -84,10 +85,9 @@ const ManageProfile = () => {
             }
             type='text'
           />
-
           <div>
             <button type='submit' className='form-button'>
-              {loading ? 'Updating...' : 'Update'}
+              {loading ? <Loader /> : 'Update'}
             </button>
             {success && <p>Update success!</p>}
           </div>

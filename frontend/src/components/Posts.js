@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Post from './Post';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPosts } from '../actions/postActions';
+import Loader from './Loader';
 
 const Posts = () => {
   const { loading, posts, error } = useSelector((state) => state.posts);
@@ -20,13 +21,13 @@ const Posts = () => {
           allowed on Instagram and how our service works. Continuing to use the
           app means you accept these updates.
         </p>
-        <button className='add-btn '>
-          <a href='/new-post' style={{ color: '#fff' }}>
-            Add a new post
-          </a>{' '}
-        </button>
+        <a href='/new-post' style={{ color: '#fff' }}>
+          <button className='add-btn '>Add a new post</button>
+        </a>
       </div>
-      {loading ? null : error ? (
+      {loading ? (
+        <Loader />
+      ) : error ? (
         <p>{error}</p>
       ) : (
         <>
