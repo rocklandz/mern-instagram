@@ -34,7 +34,6 @@ const getPost = asyncHandler(async (req, res) => {
 // @access Private
 const createPost = asyncHandler(async (req, res) => {
   const { id, username, avatar } = req.user;
-  console.log(req.headers);
 
   const post = await Post.create({
     user: id,
@@ -85,7 +84,7 @@ const likePost = asyncHandler(async (req, res) => {
 // @access Private
 const createComment = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
-  console.log(req.url);
+
   if (post) {
     post.comments.unshift({
       user: req.user._id,

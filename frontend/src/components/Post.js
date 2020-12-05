@@ -29,7 +29,6 @@ const Post = ({ post }) => {
 
   const handleLike = () => {
     dispatch(likePost(_id));
-    console.log(_id);
   };
 
   return (
@@ -163,7 +162,7 @@ const Post = ({ post }) => {
           {comments.length > 0 ? (
             <>
               {comments.slice(0, 4).map((cmt) => (
-                <p className='comment'>
+                <p key={cmt._id} className='comment'>
                   <span className='user bold-text'>{cmt.name} </span>{' '}
                   {cmt.comment}
                 </p>

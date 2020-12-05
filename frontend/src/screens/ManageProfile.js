@@ -55,8 +55,8 @@ const ManageProfile = () => {
         </div>
         <form onSubmit={handleSubmit} className='register-form'>
           <div className='avatar-input'>
-            <img src={imgHolder} className='avatar-holder' />
-            <input onChange={handleInput} type='file' placeholder='Avatar' />
+            <img src={imgHolder} className='avatar-holder' alt='' />
+            <input onChange={handleInput} type='file' />
           </div>
 
           <h4 className='label'>Email:</h4>

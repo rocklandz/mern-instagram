@@ -42,7 +42,7 @@ const PostForm = ({ history }) => {
       history.push('/');
     }
     dispatch(getUserProfile());
-  }, [dispatch]);
+  }, [dispatch, history, post]);
 
   return (
     <>
@@ -52,7 +52,7 @@ const PostForm = ({ history }) => {
         </div>
         <form onSubmit={handleSubmit} className='register-form'>
           <div className='image-holder'>
-            <img src={image} />
+            <img src={image} alt='' />
             <input onChange={handleInput} type='file' />
           </div>
           <textarea
