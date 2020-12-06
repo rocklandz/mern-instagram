@@ -5,16 +5,7 @@ import { createComment, likePost } from '../actions/postActions';
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
-  const {
-    _id,
-    username,
-    avatar,
-    image,
-    likes,
-    comments,
-    createdAt,
-    caption,
-  } = post;
+  const { _id, user, image, likes, comments, createdAt, caption } = post;
 
   const [cmtText, setCmtText] = useState('');
 
@@ -34,9 +25,15 @@ const Post = ({ post }) => {
   return (
     <section id='post'>
       <div className='post-header'>
-        <img src={avatar} alt='' className='avatar' width='32' height='32' />
+        <img
+          src={user.avatar}
+          alt=''
+          className='avatar'
+          width='32'
+          height='32'
+        />
         <a href='/' className='post-user'>
-          {username}
+          {user.username}
         </a>
         <div className='post-options'>
           <svg
@@ -81,7 +78,7 @@ const Post = ({ post }) => {
           <ul>
             <li>
               <span className='react like-btn' onClick={handleLike}>
-                {likes.map((like) => like.user).includes(id) ? (
+                {likes.map((like) => like.user._id).includes(id) ? (
                   <svg
                     fill='#ed4956'
                     height='24'
@@ -139,7 +136,7 @@ const Post = ({ post }) => {
 
         {likes.length > 0 ? (
           <div className='likes'>
-            Liked by <span className='bold-text'>{likes[0].name}</span>
+            Liked by <span className='bold-text'>{likes[0].user.username}</span>
             {likes.length > 1 && (
               <>
                 {' '}
@@ -153,7 +150,7 @@ const Post = ({ post }) => {
           <p className='comment'>
             {caption ? (
               <>
-                <span className='user bold-text'>{username} </span>
+                <span className='user bold-text'>{user.username} </span>
                 {caption}{' '}
               </>
             ) : null}
@@ -163,7 +160,7 @@ const Post = ({ post }) => {
             <>
               {comments.slice(0, 4).map((cmt) => (
                 <p key={cmt._id} className='comment'>
-                  <span className='user bold-text'>{cmt.name} </span>{' '}
+                  <span className='user bold-text'>{cmt.user.username} </span>{' '}
                   {cmt.comment}
                 </p>
               ))}

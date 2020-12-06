@@ -5,7 +5,18 @@ import Post from '../models/postModel.js';
 // @route  GET /api/posts
 // @access Private
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
+  const posts = await Post.find({})
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .populate('user', 'username avatar')
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', model: 'User', select: 'username' },
+    })
+    .populate({
+      path: 'likes',
+      populate: { path: 'user', model: 'User', select: 'username' },
+    });
 
   if (posts) {
     res.json(posts);
@@ -19,7 +30,16 @@ const getPosts = asyncHandler(async (req, res) => {
 // @route  GET /api/posts/:id
 // @access Private
 const getPost = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id);
+  const post = await Post.findById(req.params.id)
+    .populate('user', 'username avatar')
+    .populate({
+      path: 'comments',
+      populate: { path: 'user', model: 'User', select: 'username' },
+    })
+    .populate({
+      path: 'likes',
+      populate: { path: 'user', model: 'User', select: 'username' },
+    });
 
   if (post) {
     res.json(post);
@@ -33,12 +53,10 @@ const getPost = asyncHandler(async (req, res) => {
 // @route  POST /api/posts/
 // @access Private
 const createPost = asyncHandler(async (req, res) => {
-  const { id, username, avatar } = req.user;
+  const { id } = req.user;
 
   const post = await Post.create({
     user: id,
-    username: username,
-    avatar: avatar,
     image: req.body.image,
     caption: req.body.caption,
   });
@@ -58,20 +76,33 @@ const likePost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id);
 
   if (post) {
-    if (post.likes.map((like) => like.user).includes(req.user.id)) {
+    if (post.likes.map((like) => like.user._id).includes(req.user.id)) {
       post.likes = post.likes.filter(
         ({ user }) => user.toString() !== req.user.id
       );
+
       await post.save();
     } else {
       post.likes.unshift({
         user: req.user._id,
-        name: req.user.username,
       });
+      
       await post.save();
     }
 
-    const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
+    const posts = await Post.find({})
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate('user', 'username avatar')
+      .populate({
+        path: 'comments',
+        populate: { path: 'user', model: 'User', select: 'username' },
+      })
+      .populate({
+        path: 'likes',
+        populate: { path: 'user', model: 'User', select: 'username' },
+      });
+
     res.json(posts);
   } else {
     res.status(404);
@@ -94,7 +125,19 @@ const createComment = asyncHandler(async (req, res) => {
 
     await post.save();
 
-    const posts = await Post.find({}).sort({ createdAt: -1 }).limit(10);
+    const posts = await Post.find({})
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate('user', 'username avatar')
+      .populate({
+        path: 'comments',
+        populate: { path: 'user', model: 'User', select: 'username' },
+      })
+      .populate({
+        path: 'likes',
+        populate: { path: 'user', model: 'User', select: 'username' },
+      });
+
     res.json(posts);
   } else {
     res.status(404);
