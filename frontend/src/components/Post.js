@@ -168,6 +168,16 @@ const Post = ({ post, onPost = false, hideComment = true }) => {
 
           {comments.length > 0 ? (
             <>
+              {hideComment && comments.length > 4 && (
+                <a
+                  style={{ marginBottom: '4px' }}
+                  className='grey-text'
+                  href={`/post/${_id}`}
+                >
+                  View all {comments.length} comments
+                </a>
+              )}
+
               {(hideComment ? comments.slice(0, 3) : comments).map((cmt) => (
                 <p key={cmt._id} className='comment'>
                   <span className='user bold-text'>{cmt.user.username} </span>{' '}
