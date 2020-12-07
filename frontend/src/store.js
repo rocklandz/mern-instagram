@@ -8,8 +8,10 @@ import {
   likePostReducer,
   postsReducer,
   commentsReducer,
+  currentUserPostsReducer,
 } from './reducers/postReducers';
 import {
+  getProfileReducer,
   userLoginReducer,
   userProfileReducer,
   userRegisterReducer,
@@ -21,9 +23,11 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userProfile: userProfileReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  getProfile: getProfileReducer,
 
   posts: postsReducer,
   currentPost: currentPostReducer,
+  currentUserPosts: currentUserPostsReducer,
   comments: commentsReducer,
   createPost: createPostReducer,
   likePost: likePostReducer,

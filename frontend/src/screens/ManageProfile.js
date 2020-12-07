@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile, updateUserProfile } from '../actions/userActions';
+import { updateUserProfile } from '../actions/userActions';
 import Loader from '../components/Loader';
 import avatarHolder from '../images/avatar.jpg';
 
@@ -39,8 +39,6 @@ const ManageProfile = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserProfile());
-
     setProfileData(user);
     setImgHolder(user.avatar);
   }, [dispatch, user.name]);

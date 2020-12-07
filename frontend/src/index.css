@@ -14,10 +14,12 @@ code {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 a {
   text-decoration: none;
   cursor: pointer;
+  color: #000;
 }
 h1,
 h2,
@@ -137,7 +139,9 @@ input.search::placeholder {
   background-color: #fff;
   border: 1px solid #dbdbdb;
   border-radius: 3px;
+  margin: 0 auto;
   margin-bottom: 60px;
+  max-width: 800px;
 }
 .post-header {
   display: grid;
@@ -349,6 +353,53 @@ p.comment {
   opacity: 0;
 }
 
+/* User Page */
+.user-container {
+  padding: 0 20px;
+}
+.user-header {
+  display: flex;
+}
+.user-avatar {
+  padding: 0 2rem;
+}
+.user-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.user-profile {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+.user-header h2 {
+  font-weight: 300;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  margin-bottom: 10px;
+}
+.user-posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1.8rem;
+  border-top: 1px solid #dbdbdb;
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+.user-post {
+  position: relative;
+  padding-top: 100%;
+  width: 100%;
+}
+.user-post img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* Responsive CSS  */
 @media screen and (max-width: 800px) {
   .home-container {
@@ -372,7 +423,9 @@ p.comment {
   }
   .profile-container {
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
   }
   .posts-header {
     padding: 1rem;
@@ -383,6 +436,19 @@ p.comment {
   }
   .form-container {
     padding: 1rem;
+  }
+  .user-container {
+    padding: 0;
+  }
+  .user-avatar {
+    padding: 0 10px;
+  }
+  .user-avatar img {
+    width: 77px;
+    height: 77px;
+  }
+  .user-posts {
+    grid-gap: 5px;
   }
 }
 

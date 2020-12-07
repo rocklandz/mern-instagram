@@ -1,17 +1,13 @@
 import React, { useEffect } from 'react';
 import SuggestItem from './SuggestItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfile, logout } from '../actions/userActions';
+import { logout } from '../actions/userActions';
 
 const Profile = ({ history }) => {
   const dispatch = useDispatch();
 
   const { loading, error, user } = useSelector((state) => state.userProfile);
-  const { avatar, username, name } = user;
-
-  useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch]);
+  const { _id, avatar, username, name } = user;
 
   return (
     <>
@@ -19,16 +15,20 @@ const Profile = ({ history }) => {
         <section id='right'>
           <div id='profile'>
             <div className='profile-container'>
-              <img
-                src={avatar}
-                alt=''
-                className='profile-avatar'
-                height='56'
-                width='56'
-              />
+              <a href={`/user/${_id}`}>
+                <img
+                  src={avatar}
+                  alt=''
+                  className='profile-avatar'
+                  height='56'
+                  width='56'
+                />
+              </a>
 
               <div className='info'>
-                <p className='bold-text'>{username}</p>
+                <a href={`/user/${_id}`} className='bold-text'>
+                  <p>{username}</p>
+                </a>
                 <p className='grey-text'>{name}</p>
               </div>
 

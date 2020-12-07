@@ -14,6 +14,15 @@ import {
   POST_COMMENT_REQUEST,
   POST_COMMENT_SUCCESS,
   POST_COMMENT_FAIL,
+  USER_POSTS_FETCH_REQUEST,
+  USER_POSTS_FETCH_SUCCESS,
+  USER_POSTS_FETCH_FAIL,
+  POST_COMMENT_INSIDE_REQUEST,
+  POST_COMMENT_INSIDE_SUCCESS,
+  POST_COMMENT_INSIDE_FAIL,
+  POST_LIKE_INSIDE_REQUEST,
+  POST_LIKE_INSIDE_SUCCESS,
+  POST_LIKE_INSIDE_FAIL,
 } from '../constants/postConstants';
 import axios from 'axios';
 
@@ -67,6 +76,35 @@ export const getPost = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: POST_FETCH_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUserPosts = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_POSTS_FETCH_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/posts/user/${id}`, config);
+
+    dispatch({ type: USER_POSTS_FETCH_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_POSTS_FETCH_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -151,6 +189,42 @@ export const createComment = (id, comment) => async (dispatch, getState) => {
   }
 };
 
+export const createCommentInside = (id, comment) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: POST_COMMENT_INSIDE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/posts/${id}/comment-inside`,
+      { comment },
+      config
+    );
+
+    dispatch({ type: POST_COMMENT_INSIDE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: POST_COMMENT_INSIDE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const likePost = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: POST_LIKE_REQUEST });
@@ -172,6 +246,35 @@ export const likePost = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: POST_LIKE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const likePostInside = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: POST_LIKE_INSIDE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const { data } = await axios({
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+      url: `/api/posts/${id}/like-inside`,
+    });
+
+    dispatch({ type: POST_LIKE_INSIDE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: POST_LIKE_INSIDE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

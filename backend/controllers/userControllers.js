@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../models/userModel.js';
+import Post from '../models/postModel.js';
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -111,4 +112,24 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, getUserProfile, updateUserProfile, authUser };
+// @desc   Get user profile by Id
+// @route  GET /api/users/:id
+// @access Private
+const getProfileById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(401);
+    throw new Error('User not found');
+  }
+});
+
+export {
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  authUser,
+  getProfileById,
+};

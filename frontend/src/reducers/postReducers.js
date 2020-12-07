@@ -14,6 +14,11 @@ import {
   POST_COMMENT_REQUEST,
   POST_COMMENT_SUCCESS,
   POST_COMMENT_FAIL,
+  USER_POSTS_FETCH_REQUEST,
+  USER_POSTS_FETCH_SUCCESS,
+  USER_POSTS_FETCH_FAIL,
+  POST_COMMENT_INSIDE_SUCCESS,
+  POST_LIKE_INSIDE_SUCCESS,
 } from '../constants/postConstants';
 
 export const commentsReducer = (state = { posts: [] }, action) => {
@@ -48,15 +53,35 @@ export const postsReducer = (state = { posts: [] }, action) => {
   }
 };
 
-export const currentPostReducer = (state = {}, action) => {
+export const currentPostReducer = (
+  state = { post: { user: {}, comments: [], likes: [] } },
+  action
+) => {
   const { type, payload } = action;
 
   switch (type) {
     case POST_FETCH_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case POST_FETCH_SUCCESS:
+    case POST_COMMENT_INSIDE_SUCCESS:
+    case POST_LIKE_INSIDE_SUCCESS:
       return { loading: false, post: payload };
     case POST_FETCH_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const currentUserPostsReducer = (state = {}, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case USER_POSTS_FETCH_REQUEST:
+      return { loading: true };
+    case USER_POSTS_FETCH_SUCCESS:
+      return { loading: false, posts: payload };
+    case USER_POSTS_FETCH_FAIL:
       return { loading: false, error: payload };
     default:
       return state;

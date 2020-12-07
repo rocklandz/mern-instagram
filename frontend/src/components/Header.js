@@ -1,9 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserProfile } from '../actions/userActions';
 import logo from '../images/ig-logo.png';
 
 const Header = () => {
   const { user } = useSelector((state) => state.userProfile);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserProfile());
+  }, [dispatch]);
 
   return (
     <>
@@ -24,7 +30,7 @@ const Header = () => {
             <div>
               <ul className='nav'>
                 <li>
-                  <a href='/' className='nav-link'>
+                  <a href='/#' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, likePost } from '../actions/postActions';
+import {
+  createComment,
+  createCommentInside,
+  likePost,
+  likePostInside,
+} from '../actions/postActions';
 
-const Post = ({ post }) => {
+const Post = ({ post, onPost = false, hideComment = true }) => {
   const dispatch = useDispatch();
   const { _id, user, image, likes, comments, createdAt, caption } = post;
 
@@ -13,29 +18,34 @@ const Post = ({ post }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createComment(_id, cmtText));
+    onPost
+      ? dispatch(createCommentInside(_id, cmtText))
+      : dispatch(createComment(_id, cmtText));
 
     setCmtText('');
   };
 
   const handleLike = () => {
-    dispatch(likePost(_id));
+    console.log(onPost);
+    onPost ? dispatch(likePostInside(_id)) : dispatch(likePost(_id));
   };
 
   return (
     <section id='post'>
       <div className='post-header'>
-        <img
-          src={user.avatar}
-          alt=''
-          className='avatar'
-          width='32'
-          height='32'
-        />
-        <a href='/' className='post-user'>
+        <a href={`/user/${user._id}`}>
+          <img
+            src={user.avatar}
+            alt=''
+            className='avatar'
+            width='32'
+            height='32'
+          />
+        </a>
+        <a href={`/user/${user._id}`} className='post-user'>
           {user.username}
         </a>
-        <div className='post-options'>
+        <a href={`/post/${_id}`} className='post-options'>
           <svg
             aria-label='Tùy chọn khác'
             className='_8-yf5 '
@@ -66,7 +76,7 @@ const Post = ({ post }) => {
               r='4.5'
             ></circle>
           </svg>
-        </div>
+        </a>
       </div>
 
       <div className='post-image'>
@@ -158,7 +168,7 @@ const Post = ({ post }) => {
 
           {comments.length > 0 ? (
             <>
-              {comments.slice(0, 4).map((cmt) => (
+              {(hideComment ? comments.slice(0, 3) : comments).map((cmt) => (
                 <p key={cmt._id} className='comment'>
                   <span className='user bold-text'>{cmt.user.username} </span>{' '}
                   {cmt.comment}

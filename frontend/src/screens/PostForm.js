@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPost } from '../actions/postActions';
-import { getUserProfile } from '../actions/userActions';
 import Loader from '../components/Loader';
 import logo from '../images/ig-logo.png';
 import imageHolder from '../images/post-holder.png';
@@ -41,8 +40,7 @@ const PostForm = ({ history }) => {
     if (post) {
       history.push('/');
     }
-    dispatch(getUserProfile());
-  }, [dispatch, history, post]);
+  }, [history, post]);
 
   return (
     <>
