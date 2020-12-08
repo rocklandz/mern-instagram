@@ -375,7 +375,9 @@ p.comment {
 .user-header h2 {
   font-weight: 300;
   font-size: 1.8rem;
-  line-height: 2rem;
+  line-height: 2.2rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
   margin-bottom: 10px;
 }
 .user-posts {

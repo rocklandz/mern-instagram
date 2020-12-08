@@ -4,12 +4,15 @@ import { getUserProfile } from '../actions/userActions';
 import logo from '../images/ig-logo.png';
 
 const Header = () => {
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userProfile);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch]);
+    if (userInfo && userInfo.id) {
+      dispatch(getUserProfile());
+    }
+  }, [dispatch, userInfo]);
 
   return (
     <>
@@ -96,6 +99,7 @@ const Header = () => {
                       src={user.avatar}
                       width='24'
                       height='24'
+                      alt=''
                     />
                   </a>
                 </li>
