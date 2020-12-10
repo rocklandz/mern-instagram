@@ -21,7 +21,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 
 const __dirname = path.resolve();
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/frontend/build')));
 
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   );
 } else {
   app.get('/', (req, res) => {
-    res.send('Server is running');
+    res.send('API is running....');
   });
 }
 
