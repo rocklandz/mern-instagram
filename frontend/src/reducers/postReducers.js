@@ -48,6 +48,8 @@ export const postsReducer = (state = { posts: [] }, action) => {
       return { loading: false, posts: payload };
     case POSTS_FETCH_FAIL:
       return { loading: false, error: payload };
+    case USER_LOGOUT:
+      return { posts: [] };
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import { updateUserProfile } from '../actions/userActions';
 import Loader from '../components/Loader';
 import avatarHolder from '../images/avatar.jpg';
 
-const ManageProfile = ({ history }) => {
+const ManageProfile = ({}) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userProfile);
   const { loading, error, success } = useSelector(
@@ -41,11 +41,7 @@ const ManageProfile = ({ history }) => {
   useEffect(() => {
     setProfileData(user);
     setImgHolder(user.avatar);
-
-    if (success) {
-      history.push('/');
-    }
-  }, [dispatch, user.name, success, history]);
+  }, [dispatch, user.name]);
 
   return (
     <>
