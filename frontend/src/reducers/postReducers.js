@@ -20,6 +20,7 @@ import {
   POST_COMMENT_INSIDE_SUCCESS,
   POST_LIKE_INSIDE_SUCCESS,
 } from '../constants/postConstants';
+import { USER_LOGOUT } from '../constants/userConstants';
 
 export const commentsReducer = (state = { posts: [] }, action) => {
   const { type, payload } = action;
