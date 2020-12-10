@@ -7,7 +7,7 @@ import Post from '../models/postModel.js';
 const getPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({})
     .sort({ createdAt: -1 })
-    .limit(10)
+    .limit(15)
     .populate('user', 'username avatar')
     .populate({
       path: 'comments',
@@ -106,7 +106,7 @@ const likePost = asyncHandler(async (req, res) => {
 
     const posts = await Post.find({})
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(15)
       .populate('user', 'username avatar')
       .populate({
         path: 'comments',
@@ -177,7 +177,7 @@ const createComment = asyncHandler(async (req, res) => {
 
     const posts = await Post.find({})
       .sort({ createdAt: -1 })
-      .limit(10)
+      .limit(15)
       .populate('user', 'username avatar')
       .populate({
         path: 'comments',

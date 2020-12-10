@@ -33,11 +33,13 @@ const Login = ({ history }) => {
         </div>
         <form onSubmit={handleSubmit} className='register-form'>
           <input
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder='Your email'
             type='email'
           />
           <input
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
             type='password'
@@ -52,11 +54,22 @@ const Login = ({ history }) => {
       </div>
 
       <div className='form-container'>
-        <p clas>
+        <p>
           No account?{' '}
           <a href='/register' className='blue-text bold-text'>
             Register
-          </a>
+          </a>{' '}
+          or{' '}
+          <span
+            onClick={() => {
+              setEmail('johndoe@gmail.com');
+              setPassword('123456');
+            }}
+            style={{ cursor: 'pointer' }}
+            className='blue-text bold-text'
+          >
+            Use mock account
+          </span>
         </p>
       </div>
     </>

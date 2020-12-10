@@ -1,8 +1,8 @@
 import React from 'react';
 import Profile from '../components/Profile';
 import Posts from '../components/Posts';
-import Guest from '../components/Guest';
 import { useSelector } from 'react-redux';
+import Login from './Login';
 
 const Home = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -15,7 +15,7 @@ const Home = () => {
           <Profile />
         </div>
       ) : (
-        <Guest />
+        <Login />
       )}
     </>
   );
