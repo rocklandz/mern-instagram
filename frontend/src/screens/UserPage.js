@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import avatar from '../images/avatar.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfileById } from '../actions/userActions';
 import { getUserPosts } from '../actions/postActions';

@@ -2,14 +2,12 @@ import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../models/userModel.js';
-import Post from '../models/postModel.js';
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 };
-const salt = await bcrypt.genSalt(10);
 
 // @desc   Authorize user & get token
 // @route  POST /api/users/login
@@ -39,6 +37,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, username } = req.body;
+  const salt = await bcrypt.genSalt(10);
 
   const alreadyExists = await User.findOne({ email });
 

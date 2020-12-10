@@ -45,7 +45,7 @@ const ManageProfile = ({ history }) => {
     if (success) {
       history.push('/');
     }
-  }, [dispatch, user.name, history]);
+  }, [dispatch, user.name, success, history]);
 
   return (
     <>
