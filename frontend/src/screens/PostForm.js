@@ -72,7 +72,11 @@ const PostForm = ({ history }) => {
           />
           <div>
             {error ? <p>{error}</p> : null}
-            <button type='submit' className='form-button'>
+            <button
+              type='submit'
+              className='form-button'
+              disabled={loading ? true : false}
+            >
               {loading ? <Loader /> : 'Submit'}
             </button>
           </div>

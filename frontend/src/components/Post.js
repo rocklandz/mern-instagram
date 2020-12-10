@@ -150,7 +150,10 @@ const Post = ({ post, onPost = false, hideComment = true }) => {
             {likes.length > 1 && (
               <>
                 {' '}
-                and <span className='bold-text'>{likes.length - 1} others</span>
+                and{' '}
+                <span className='bold-text'>
+                  {likes.length - 1} {likes.length === 2 ? 'other' : 'others'}
+                </span>
               </>
             )}
           </div>
