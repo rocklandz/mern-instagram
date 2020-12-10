@@ -4,7 +4,7 @@ import { updateUserProfile } from '../actions/userActions';
 import Loader from '../components/Loader';
 import avatarHolder from '../images/avatar.jpg';
 
-const ManageProfile = () => {
+const ManageProfile = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userProfile);
   const { loading, error, success } = useSelector(
@@ -41,7 +41,11 @@ const ManageProfile = () => {
   useEffect(() => {
     setProfileData(user);
     setImgHolder(user.avatar);
-  }, [dispatch, user.name]);
+
+    if (success) {
+      history.push('/');
+    }
+  }, [dispatch, user.name, history]);
 
   return (
     <>
@@ -84,6 +88,7 @@ const ManageProfile = () => {
             type='text'
           />
           <div>
+            {error ? <p>{error}</p> : null}
             <button type='submit' className='form-button'>
               {loading ? <Loader /> : 'Update'}
             </button>

@@ -61,6 +61,7 @@ const Register = ({ history }) => {
             type='text'
           />
           <div>
+            {error ? <p>{error}</p> : null}
             <button type='submit' className='form-button'>
               {loading ? 'Loading...' : 'Register'}
             </button>

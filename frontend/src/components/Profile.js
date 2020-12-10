@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SuggestItem from './SuggestItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
 
-const Profile = ({ history }) => {
+const Profile = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, user } = useSelector((state) => state.userProfile);
+  const { loading, user } = useSelector((state) => state.userProfile);
   const { _id, avatar, username, name } = user;
 
   return (
@@ -14,7 +14,7 @@ const Profile = ({ history }) => {
       {loading ? null : (
         <section id='right'>
           <div id='profile'>
-            <div className='profile-container'>
+            <div className='profile-container '>
               <a href={`/user/${_id}`}>
                 <img
                   src={avatar}

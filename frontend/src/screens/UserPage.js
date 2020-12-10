@@ -7,7 +7,7 @@ import { getUserPosts } from '../actions/postActions';
 const UserPage = ({ match }) => {
   const dispatch = useDispatch();
 
-  const { user, loading, error } = useSelector((state) => state.getProfile);
+  const { user } = useSelector((state) => state.getProfile);
   const { posts } = useSelector((state) => state.currentUserPosts);
 
   useEffect(() => {
