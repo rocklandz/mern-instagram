@@ -33,7 +33,7 @@ const Header = () => {
             <div>
               <ul className='nav'>
                 <li>
-                  <a href='/#' className='nav-link'>
+                  <a href='/' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'
@@ -46,7 +46,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href='/new-post' className='nav-link'>
+                  <a href='/#' className='nav-link'>
                     <svg
                       aria-label='Home'
                       fill='#262626'
