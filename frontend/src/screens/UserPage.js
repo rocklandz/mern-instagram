@@ -27,9 +27,7 @@ const UserPage = ({ match }) => {
       </div>
 
       <div className='user-posts'>
-        {!posts ? (
-          <p>This account doesn't have any post.</p>
-        ) : (
+        {!posts ? null : (
           <>
             {posts.map((post) => (
               <a href={`/post/${post._id}`} className='user-post'>
